@@ -8,16 +8,13 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-export default function Board() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState(true);
-
+function Board({ xIsNext, squares, onPlay }) {
   function handleClick(i) {
-    const nextSquares = squares.slice();
-
-    if (nextSquares[i]) {
+    if (squares[i]) {
       return;
     }
+
+    const nextSquares = squares.slice();
 
     if (xIsNext) {
       nextSquares[i] = 'X';
@@ -25,8 +22,7 @@ export default function Board() {
       nextSquares[i] = 'O';
     }
 
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
+    onPlay(nextSquares);
   }
 
   const status = 'Next player: ' + (xIsNext ? 'X' : 'O');
@@ -51,4 +47,16 @@ export default function Board() {
       </div>
     </>
   );
+}
+
+export default function Game() {
+  const [xIsNext, setXIsNext] = useState(true);
+  const [squares, setSquares] = useState(Array(9).fill(null));
+
+  function handlePlay(nextSquares) {
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
+  }
+
+  return <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} />;
 }
