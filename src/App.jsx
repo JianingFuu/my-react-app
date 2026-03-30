@@ -59,7 +59,16 @@ export default function Game() {
     setXIsNext(!xIsNext);
   }
 
+  const moves = [<li key={0}>Go to game start</li>];
+
   return (
-    <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+    <div className="game">
+      <div className="game-board">
+        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+      </div>
+      <div className="game-info">
+        <ol>{moves}</ol>
+      </div>
+    </div>
   );
 }
