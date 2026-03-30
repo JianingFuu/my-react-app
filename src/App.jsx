@@ -51,12 +51,15 @@ function Board({ xIsNext, squares, onPlay }) {
 
 export default function Game() {
   const [xIsNext, setXIsNext] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const currentSquares = history[history.length - 1];
 
   function handlePlay(nextSquares) {
-    setSquares(nextSquares);
+    setHistory([...history, nextSquares]);
     setXIsNext(!xIsNext);
   }
 
-  return <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} />;
+  return (
+    <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+  );
 }
